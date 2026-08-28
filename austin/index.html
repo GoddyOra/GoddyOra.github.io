@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Austin Orabuego! 🎉</title>
+<meta name="description" content="A birthday page for Austin Uzochukwu Orabuego.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Poppins:wght@400;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #ff5da2;
+    --purple: #7b5bff;
+    --yellow: #ffd23f;
+    --teal: #2ee6c5;
+    --orange: #ff8c42;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #2b0f54, #5a1a7a 35%, #1a0a3a 100%);
+    color: #fff;
+    min-height: 100vh;
+  }
+
+  body { position: relative; }
+
+  /* ---------- Confetti ---------- */
+  #confetti-layer, #balloon-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  #confetti-layer { z-index: 5; }
+  #balloon-layer { z-index: 4; }
+
+  .confetti-piece {
+    position: absolute;
+    top: -20px;
+    width: 10px;
+    height: 16px;
+    opacity: 0.9;
+    animation-name: fall, sway;
+    animation-timing-function: linear, ease-in-out;
+    animation-iteration-count: infinite, infinite;
+  }
+
+  @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+  @keyframes sway { 0%, 100% { margin-left: 0; } 50% { margin-left: 40px; } }
+
+  .balloon {
+    position: absolute;
+    bottom: -140px;
+    font-size: 64px;
+    animation: rise linear infinite;
+    filter: drop-shadow(0 8px 10px rgba(0,0,0,0.35));
+  }
+
+  @keyframes rise {
+    0%   { transform: translateY(0) translateX(0) rotate(0deg); }
+    25%  { transform: translateY(-30vh) translateX(20px) rotate(-6deg); }
+    50%  { transform: translateY(-60vh) translateX(-20px) rotate(6deg); }
+    75%  { transform: translateY(-90vh) translateX(15px) rotate(-4deg); }
+    100% { transform: translateY(-125vh) translateX(0) rotate(0deg); }
+  }
+
+  /* ---------- Layout ---------- */
+  main {
+    position: relative;
+    z-index: 10;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 56px 24px 90px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--yellow);
+    background: rgba(255,255,255,0.08);
+    padding: 8px 18px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+
+  h1 {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: clamp(2.2rem, 6.5vw, 4.6rem);
+    line-height: 1.1;
+    margin: 0 0 12px;
+    background: linear-gradient(90deg, var(--pink), var(--yellow), var(--teal), var(--purple));
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shine 6s linear infinite;
+  }
+
+  @keyframes shine { to { background-position: 300% center; } }
+
+  .subtitle {
+    font-size: clamp(1rem, 2.4vw, 1.35rem);
+    font-weight: 600;
+    color: #f1e9ff;
+    margin: 0 auto 40px;
+    max-width: 640px;
+  }
+
+  .subtitle span { color: var(--teal); }
+
+  /* ---------- Slideshow ---------- */
+  .slideshow {
+    position: relative;
+    max-width: 620px;
+    margin: 0 auto 20px;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.16);
+    box-shadow: 0 24px 70px rgba(0,0,0,0.45);
+    background: #1a0a3a;
+  }
+
+  .slide-stage {
+    position: relative;
+    width: 100%;
+    height: min(70vh, 560px);
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+
+  .slide.active { opacity: 1; }
+
+  /* blurred backdrop fills the frame for mixed aspect ratios */
+  .slide .bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(26px) brightness(0.5) saturate(1.2);
+    transform: scale(1.15);
+  }
+
+  .slide .fg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .slide-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 46px 20px 18px;
+    background: linear-gradient(to top, rgba(10,4,22,0.92), rgba(10,4,22,0));
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .slide-caption .rank {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: clamp(1.05rem, 3vw, 1.4rem);
+    color: var(--yellow);
+    display: block;
+  }
+
+  .slide-caption .detail {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(0.85rem, 2.2vw, 1rem);
+    color: #f0e6ff;
+  }
+
+  .slide-caption s,
+  .message-card s {
+    text-decoration: line-through;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 2px;
+    text-decoration-skip-ink: none;
+    opacity: 0.72;
+  }
+
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(20,8,40,0.55);
+    color: #fff;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+
+  .nav-btn:hover { background: rgba(123,91,255,0.8); }
+  .nav-btn:active { transform: translateY(-50%) scale(0.92); }
+  .nav-prev { left: 12px; }
+  .nav-next { right: 12px; }
+
+  .dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 44px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: rgba(255,255,255,0.28);
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+
+  .dot.active {
+    background: var(--yellow);
+    transform: scale(1.35);
+  }
+
+  /* ---------- Message ---------- */
+  .message-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    backdrop-filter: blur(6px);
+    border-radius: 24px;
+    padding: 32px clamp(20px, 5vw, 48px);
+    margin: 0 auto 40px;
+    max-width: 720px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    text-align: left;
+  }
+
+  .message-card p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1rem, 2.1vw, 1.12rem);
+    line-height: 1.75;
+    margin: 0 0 16px;
+    color: #f5f0ff;
+  }
+
+  .message-card p:last-of-type { margin-bottom: 0; }
+
+  .msg-callout {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: clamp(1.2rem, 3.2vw, 1.6rem);
+    color: var(--yellow);
+    text-align: center;
+    margin: 4px 0 20px !important;
+  }
+
+  .msg-closing {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: clamp(1.1rem, 2.8vw, 1.35rem);
+    color: var(--pink);
+    text-align: center;
+    margin: 24px 0 0 !important;
+  }
+
+  .signature {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    text-align: right;
+    color: #ffe9b8;
+    margin-top: 22px !important;
+  }
+
+  /* ---------- Wish button ---------- */
+  .cake {
+    font-size: clamp(3.4rem, 10vw, 5.4rem);
+    line-height: 1;
+    display: inline-block;
+    animation: bob 3s ease-in-out infinite;
+  }
+
+  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+  .wish-btn {
+    display: block;
+    margin: 16px auto 0;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #2b0f54;
+    background: linear-gradient(90deg, var(--yellow), var(--orange));
+    border: none;
+    padding: 16px 36px;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 12px 30px rgba(255, 140, 66, 0.4);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .wish-btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 16px 36px rgba(255,140,66,0.55); }
+  .wish-btn:active { transform: translateY(0) scale(0.98); }
+
+  /* ---------- Fireworks ---------- */
+  #fireworks-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .fw-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: fw-burst 1s cubic-bezier(0.15, 0.7, 0.3, 1) forwards;
+  }
+
+  @keyframes fw-burst {
+    0%   { transform: translate(-50%, -50%) translate(0, 0); opacity: 1; }
+    100% { transform: translate(-50%, -50%) translate(var(--dx), var(--dy)); opacity: 0; }
+  }
+
+  footer {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 10px 20px 40px;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.55);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001s !important; animation-iteration-count: 1 !important; }
+    .slide { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="confetti-layer"></div>
+<div id="balloon-layer"></div>
+<div id="fireworks-layer"></div>
+
+<main>
+  <span class="eyebrow">Today is the day</span>
+  <h1>Happy Birthday Austin! 🎂</h1>
+  <p class="subtitle">Read the URL again — <span>orabuego.com/austin</span>. Surname first, the way the elders would call you. 😉</p>
+
+  <div class="slideshow">
+    <div class="slide-stage" id="stage">
+      <div class="slide active">
+        <img class="bg" src="img/austin-1.jpg" alt="" aria-hidden="true">
+        <img class="fg" src="img/austin-1.jpg" alt="Austin in his early school days">
+        <div class="slide-caption">
+          <span class="rank">The Smart One</span>
+          <span class="detail">Early beginnings of academia 😹</span>
+        </div>
+      </div>
+      <div class="slide">
+        <img class="bg" src="img/austin-2.jpg" alt="" aria-hidden="true">
+        <img class="fg" src="img/austin-2.jpg" alt="Austin in his early days of faith">
+        <div class="slide-caption">
+          <span class="rank">The Pious One</span>
+          <span class="detail">Early beginnings of devotion to God 😹</span>
+        </div>
+      </div>
+      <div class="slide">
+        <img class="bg" src="img/austin-3.jpg" alt="" aria-hidden="true">
+        <img class="fg" src="img/austin-3.jpg" alt="Austin with his friends">
+        <div class="slide-caption">
+          <span class="rank">The Brothers&rsquo; Keeper</span>
+          <span class="detail">Chilling with em&rsquo; homeboys 😹</span>
+        </div>
+      </div>
+      <div class="slide">
+        <img class="bg" src="img/austin-4.jpg" alt="" aria-hidden="true">
+        <img class="fg" src="img/austin-4.jpg" alt="Austin during his university days">
+        <div class="slide-caption">
+          <span class="rank">The Handsome One</span>
+          <span class="detail">100L &ldquo;I AM A COOL GUY&rdquo; era 😹</span>
+        </div>
+      </div>
+      <div class="slide">
+        <img class="bg" src="img/austin-5.jpg" alt="" aria-hidden="true">
+        <img class="fg" src="img/austin-5.jpg" alt="Austin in traditional attire">
+        <div class="slide-caption">
+          <span class="rank">The Adulting One</span>
+          <span class="detail">Rehearsing ahead of future chieftaincy titles 😹</span>
+        </div>
+      </div>
+      <div class="slide">
+        <img class="bg" src="img/austin-6.jpg" alt="" aria-hidden="true">
+        <img class="fg" src="img/austin-6.jpg" alt="Austin today, in glasses and a black shirt">
+        <div class="slide-caption">
+          <span class="rank">The Most Eligible <s>Bachelor</s> Professor</span>
+          <span class="detail">He&rsquo;s in the mood for <s>marriage</s> serious research! 😹</span>
+        </div>
+      </div>
+    </div>
+    <button class="nav-btn nav-prev" id="prevBtn" aria-label="Previous photo">&#8249;</button>
+    <button class="nav-btn nav-next" id="nextBtn" aria-label="Next photo">&#8250;</button>
+  </div>
+
+  <div class="dots" id="dots"></div>
+
+  <div class="message-card">
+    <p>28th of August is always a big day for our family. WHY? Well, because somehow 2 Orabuegos out of a family of 6 decided to announce their glorious arrival on that same day. Not as Identical Twins, though, but rather as father and son, thirty-five years apart. But for today’s celebration, we have decided to give the younger Orabuego the main spotlight:</p>
+    <p class="msg-callout">Austin Leenski, our Senior Idolo!! 🥳🎉</p>
+    <p>Austin is two years my senior, so he and our eldest bro, Micheal, automatically became my closest mentors throughout childhood and my teenage years. I simply followed in their footsteps, which made life considerably easier for me (and later, our younger bro, Joseph). 😅</p>
+    <p>Navigating Public Secondary School was easy when you have two big bros in upper classes of the same school, especially for Austin, who was one class ahead of me for most of my academic years and our School Head Boy. Preparing for WAEC/JAMB, hustling for uni admission, OT for avoiding NYSC camp stress/parade wahala😭, NYSC PPA/Relocation issues, life-after-school, and other important life decisions were easier for us, the younger ones. And yes, I still rock some of your nice shirts/clothes and shoes that <s>I stole</s> was graciously given.</p>
+    <p>Anyway, the six pictures above barely scratch the surface, but look at the range: the brainy one, the one who found God early, the one who always had his brothers around him, the certified cool guy, to dressing like a Mazi with multiple chieftaincy titles in the bag already😹, and the last one, an adult version on his pathway to greatness ahead. Same person, every single time. Just kept leveling up.</p>
+    <p>Thank you for being the kind of brother who is easy to be proud of. May this new chapter bring you everything you’ve worked for—and even more than you thought to ask for. Here’s to a year that treats you as well as you treat the people around you.</p>
+    <p class="msg-closing">Happy Birthday, Austin Uzochukwu Orabuego! 🎉🥳</p>
+    <p class="signature">Signed: Godwin Ora 🫶🏾<br>28th August, 2026.</p>
+  </div>
+
+  <div class="cake" id="cake">🎂✨</div>
+  <button class="wish-btn" id="wishBtn">🎁 Tap to Make a Wish</button>
+</main>
+
+<footer>
+  Made with 💜 for Austin &middot; orabuego.com/austin
+</footer>
+
+<script>
+  // ---------- Confetti ----------
+  const confettiLayer = document.getElementById('confetti-layer');
+  const colors = ['#ff5da2', '#ffd23f', '#2ee6c5', '#7b5bff', '#ff8c42'];
+
+  function spawnConfetti(count) {
+    for (let i = 0; i < count; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.width = 6 + Math.random() * 8 + 'px';
+      piece.style.height = 10 + Math.random() * 10 + 'px';
+      const fallDuration = 4 + Math.random() * 4;
+      const swayDuration = 2 + Math.random() * 2;
+      piece.style.animationDuration = fallDuration + 's, ' + swayDuration + 's';
+      piece.style.animationDelay = (Math.random() * 4) + 's, 0s';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      confettiLayer.appendChild(piece);
+      setTimeout(() => piece.remove(), (fallDuration + 4) * 1000);
+    }
+  }
+
+  spawnConfetti(28);
+  setInterval(() => spawnConfetti(5), 2600);
+
+  // ---------- Balloons ----------
+  const balloonLayer = document.getElementById('balloon-layer');
+
+  function spawnBalloon() {
+    const balloon = document.createElement('div');
+    balloon.className = 'balloon';
+    balloon.textContent = '🎈';
+    balloon.style.left = Math.random() * 90 + 'vw';
+    balloon.style.fontSize = (48 + Math.random() * 32) + 'px';
+    const duration = 10 + Math.random() * 6;
+    balloon.style.animationDuration = duration + 's';
+    balloonLayer.appendChild(balloon);
+    setTimeout(() => balloon.remove(), duration * 1000);
+  }
+
+  for (let i = 0; i < 5; i++) setTimeout(spawnBalloon, i * 1300);
+  setInterval(spawnBalloon, 2800);
+
+  // ---------- Slideshow ----------
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.getElementById('dots');
+  const stage = document.getElementById('stage');
+  let index = 0;
+  let timer = null;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Go to photo ' + (i + 1));
+    d.addEventListener('click', () => { show(i); restart(); });
+    dotsWrap.appendChild(d);
+  });
+
+  const dots = Array.from(dotsWrap.children);
+
+  function show(i) {
+    index = (i + slides.length) % slides.length;
+    slides.forEach((s, n) => s.classList.toggle('active', n === index));
+    dots.forEach((d, n) => d.classList.toggle('active', n === index));
+  }
+
+  function next() { show(index + 1); }
+  function prev() { show(index - 1); }
+
+  function restart() {
+    clearInterval(timer);
+    timer = setInterval(next, 5000);
+  }
+
+  document.getElementById('nextBtn').addEventListener('click', () => { next(); restart(); });
+  document.getElementById('prevBtn').addEventListener('click', () => { prev(); restart(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { next(); restart(); }
+    if (e.key === 'ArrowLeft') { prev(); restart(); }
+  });
+
+  // swipe
+  let startX = null;
+  stage.addEventListener('touchstart', (e) => { startX = e.changedTouches[0].clientX; }, { passive: true });
+  stage.addEventListener('touchend', (e) => {
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); restart(); }
+    startX = null;
+  }, { passive: true });
+
+  restart();
+
+  // ---------- Fireworks on wish ----------
+  const fwLayer = document.getElementById('fireworks-layer');
+  const fwColors = ['#ff5da2', '#ffd23f', '#2ee6c5', '#7b5bff', '#ff8c42', '#ffffff'];
+
+  function spawnFirework(xPct, yPct) {
+    const count = 26;
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count + Math.random() * 0.3;
+      const dist = 70 + Math.random() * 70;
+      const p = document.createElement('div');
+      p.className = 'fw-particle';
+      p.style.left = xPct + '%';
+      p.style.top = yPct + '%';
+      p.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+      p.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+      p.style.background = fwColors[Math.floor(Math.random() * fwColors.length)];
+      const dur = 800 + Math.random() * 400;
+      p.style.animationDuration = dur + 'ms';
+      fwLayer.appendChild(p);
+      setTimeout(() => p.remove(), dur + 50);
+    }
+  }
+
+  document.getElementById('wishBtn').addEventListener('click', () => {
+    spawnConfetti(80);
+    for (let i = 0; i < 6; i++) {
+      setTimeout(() => spawnFirework(20 + Math.random() * 60, 18 + Math.random() * 45), i * 240);
+    }
+    const cake = document.getElementById('cake');
+    cake.textContent = '🎂🌟🎉';
+    setTimeout(() => { cake.textContent = '🎂✨'; }, 1600);
+  });
+</script>
+
+</body>
+</html>

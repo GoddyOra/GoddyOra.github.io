@@ -38,7 +38,18 @@
   p {
     font-size: 1.05rem;
     color: #e6dcff;
-    margin: 0 0 28px;
+    margin: 0 0 10px;
+  }
+  p.today {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(1.15rem, 3vw, 1.45rem);
+    font-weight: 600;
+    color: #ffe9b8;
+    margin: 0 0 26px;
+  }
+  p.today strong {
+    font-weight: 800;
+    color: #ffd23f;
   }
   a.btn {
     display: inline-block;
@@ -57,7 +68,8 @@
 <body>
   <div>
     <h1>orabuego.com</h1>
-    <p>Site's under construction &mdash; the owner is still deciding what to do with it.</p>
+    <p class="today">Today is the 28th of August &mdash; meaning it&rsquo;s <strong>Austin&rsquo;s Day</strong>!! 🎉🥳</p>
+    <a class="btn" href="/austin">🎂 See Austin&rsquo;s page</a>
   </div>
 </body>
 </html>
